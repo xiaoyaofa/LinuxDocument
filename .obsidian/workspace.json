@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "5b8437355d2bf471",
+        "id": "f41c05c1f01c09e8",
         "type": "tabs",
         "children": [
           {
-            "id": "aa69486f85535c18",
+            "id": "9e22a846854c7c13",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -29,6 +29,7 @@
       {
         "id": "f501da97b544940a",
         "type": "tabs",
+        "dimension": 77.57575757575758,
         "children": [
           {
             "id": "cd65bec7af02be30",
@@ -43,6 +44,23 @@
               "title": "文件列表"
             }
           },
+          {
+            "id": "962b588e809bdc6b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      },
+      {
+        "id": "4cb089c535b3e0f1",
+        "type": "tabs",
+        "dimension": 22.424242424242426,
+        "children": [
           {
             "id": "ceab77686b9d632e",
             "type": "leaf",
@@ -59,16 +77,6 @@
               "icon": "lucide-search",
               "title": "搜索"
             }
-          },
-          {
-            "id": "962b588e809bdc6b",
-            "type": "leaf",
-            "state": {
-              "type": "bookmarks",
-              "state": {},
-              "icon": "lucide-bookmark",
-              "title": "书签"
-            }
           }
         ]
       }
@@ -84,6 +92,26 @@
         "id": "0938696d9bc9574e",
         "type": "tabs",
         "children": [
+          {
+            "id": "f85105a9e10a532f",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          },
+          {
+            "id": "085b1e2e440ff8bc",
+            "type": "leaf",
+            "state": {
+              "type": "mermaid-toolbar-view",
+              "state": {},
+              "icon": "trident-custom",
+              "title": "Mermaid Toolbar"
+            }
+          },
           {
             "id": "c117d3215b93fdf2",
             "type": "leaf",
@@ -157,23 +185,12 @@
               "icon": "lucide-list",
               "title": "大纲"
             }
-          },
-          {
-            "id": "f85105a9e10a532f",
-            "type": "leaf",
-            "state": {
-              "type": "git-view",
-              "state": {},
-              "icon": "git-pull-request",
-              "title": "Source Control"
-            }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 352.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -184,11 +201,48 @@
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "bases:新建数据库": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "templater-obsidian:Templater": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "cd65bec7af02be30",
+  "active": "f85105a9e10a532f",
   "lastOpenFiles": [
-    "未命名.md"
+    "ZZZ_Obsidian/Obsidian.md",
+    "未命名.md",
+    "Linux Core/source_code/字符设备.md",
+    "ZZZ_Excalidraw/Drawing 2026-03-17 12.55.33.excalidraw.md",
+    "ZZZ_Excalidraw",
+    "Linux Core/source_code/未命名.canvas",
+    "未命名.canvas",
+    "Linux Core/source_code/ca",
+    "Linux Core/source_code/test.canvas",
+    "Linux Core/source_code/firmware.md",
+    "IMX8MM/yocto qemu编译报错.md",
+    "ZZZ_Obsidian",
+    "Internal link.md",
+    "ZZZ_ObsidianTemplater/标题.md",
+    "ZZZ_ObsidianTemplater/代码块.md",
+    "Untitled.md",
+    "ZZZ_ObsidianTemplater",
+    "Linux Core/source_code/gpio.md",
+    "Linux Core/source_code/未命名.base",
+    "未命名.base",
+    "vscode clangd配置.md",
+    "VMWare使用鼠标侧键.md",
+    "Linux Core/version magic不一致.md",
+    "Linux Core/pps.md",
+    "Linux Core/LCD时序和参数.md",
+    "Linux Core/LCD背光延迟点亮.md",
+    "Linux Core/kmemleak内存泄露.md",
+    "Linux Core/kernel logo.md",
+    "Linux Core/ftrace内核跟踪.md",
+    "Linux Core/设备树反编译.md",
+    "Linux Core/去掉LCD闪烁光标.md",
+    "Linux Core/驱动优先级.md",
+    "Linux Core/隔离cpu.md",
+    "Linux Core/查看Image中驱动加载顺序.md",
+    "Linux Core/编译模块Makefile模板.md"
   ]
 }
