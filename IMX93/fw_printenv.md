@@ -1,0 +1,5 @@
+/etc/fw_env.config
+```
+/dev/mmcblk0            0x700000        0x4000
+/dev/mmcblk0            0x704000        0x4000
+```

@@ -1,0 +1,90 @@
+uuu_version 1.5.201
+
+# This command will be run when i.MX6/7 i.MX8MM, i.MX8MQ
+SDP: boot -f 64E4D/imx-boot
+
+# This command will be run when ROM support stream mode
+# i.MX8QXP, i.MX8QM
+SDPS: boot -f 64E4D/imx-boot
+
+# These commands will be run when use SPL and will be skipped if no spl
+# SDPU will be deprecated. please use SDPV instead of SDPU
+# {
+SDPU: delay 1000
+SDPU: write -f 64E4D/imx-boot
+SDPU: jump
+# }
+
+# These commands will be run when use SPL and will be skipped if no spl
+# if (SPL support SDPV)
+# {
+SDPV: delay 1000
+SDPV: write -f 64E4D/imx-boot
+SDPV: jump
+# }
+
+FB: ucmd setenv fastboot_dev mmc
+FB: ucmd setenv mmcdev ${emmc_dev}
+FB: ucmd mmc dev ${emmc_dev}
+#FB: flash -raw2sparse all myir-image-full-myd-jx8mp.wic
+FB: flash bootloader 64E4D/imx-boot
+FB: ucmd if env exists emmc_ack; then ; else setenv emmc_ack 0; fi;
+#FB: ucmd mmc partconf ${emmc_dev} ${emmc_ack} 1 0
+
+#Start initramfs
+FB: ucmd setenv fastboot_buffer ${fdt_addr}
+FB: download -f myd-jx8mp-initramfs.dtb
+FB: ucmd setenv fastboot_buffer ${initrd_addr}
+FB: download -f fsl-image-mfgtool-initramfs-myd-jx8mp.cpio.gz.u-boot
+FB: ucmd setenv fastboot_buffer ${loadaddr}
+FB: download -f kernel/Image
+FB: ucmd run mfgtool_args
+FB: acmd ${kboot} ${loadaddr} ${initrd_addr} ${fdt_addr}
+
+# wait mmc
+FBK: ucmd echo cat /proc/cmdline
+FBK: ucmd while [ ! -e /dev/mmcblk*boot0 ]; do sleep 1; echo "wait for /dev/mmcblk*boot* appear"; done;
+
+# serach emmc device number, if your platform have more than two emmc chip, please echo dev number >/tmp/mmcdev 
+FBK: ucmd dev=`ls /dev/mmcblk*boot*`; dev=($dev); dev=${dev[0]}; dev=${dev#/dev/mmcblk}; dev=${dev%boot*}; echo $dev > /tmp/mmcdev;
+
+# dd to clear the possible MBR
+FBK: ucmd mmc=`cat /tmp/mmcdev`; dd if=/dev/zero of=/dev/mmcblk${mmc} bs=512 count=1
+
+# create partition
+FBK: ucmd mmc=`cat /tmp/mmcdev`; PARTSTR=$'16384,186775,0c\n96M,,83\n'; echo "$PARTSTR" | sfdisk --force /dev/mmcblk${mmc}
+FBK: ucmd sync
+
+# you can enable below command to write boot partition. but offset is difference at difference platform
+#FBK: ucmd mmc=`cat /tmp/mmcdev`; echo 0 > /sys/block/mmcblk${mmc}boot0/force_ro
+#FBK: ucp  64E4D/imx-boot-bk t:/tmp
+#FBK: ucmd mmc=`cat /tmp/mmcdev`; dd if=/tmp/imx-boot-bk of=/dev/mmc${mmc}boot0 bs=1k seek=32
+#FBK: ucmd mmc=`cat /tmp/mmcdev`; echo 1 > /sys/block/mmcblk${mmc}boot0/force_ro
+
+# burn kernel and dtb
+FBK: ucmd mmc=`cat /tmp/mmcdev`; while [ ! -e /dev/mmcblk${mmc}p1 ]; do sleep 1; done
+FBK: ucmd mmc=`cat /tmp/mmcdev`; mkfs.vfat /dev/mmcblk${mmc}p1
+FBK: ucmd mmc=`cat /tmp/mmcdev`; mkdir -p /mnt/fat
+FBK: ucmd mmc=`cat /tmp/mmcdev`; mount /dev/mmcblk${mmc}p1 /mnt/fat
+FBK: ucp  kernel/Image t:/mnt/fat
+FBK: ucp  kernel/uImage t:/mnt/fat
+FBK: ucp  dtb/myd-jx8mp-base.dtb t:/mnt/fat
+FBK: ucp  dtb/myd-jx8mp-atk-8.dtb t:/mnt/fat
+FBK: ucp  dtb/myd-jx8mp-atk-10.dtb t:/mnt/fat
+FBK: ucp  tee.bin t:/mnt/fat
+FBK: ucp  bl31.bin t:/mnt/fat
+
+# burn rootfs
+FBK: ucmd mmc=`cat /tmp/mmcdev`; mkfs.ext4 /dev/mmcblk${mmc}p2
+FBK: ucmd mkdir -p /mnt/ext4
+FBK: ucmd mmc=`cat /tmp/mmcdev`; mount /dev/mmcblk${mmc}p2 /mnt/ext4
+#FBK: acmd export EXTRACT_UNSAFE_SYMLINKS=1; tar -jx -C /mnt/ext4
+#FBK: ucp rootfs/myir-image-full-myd-jx8mp.tar.bz2 t:-
+FBK: acmd export EXTRACT_UNSAFE_SYMLINKS=1; tar -zx -C /mnt/ext4
+FBK: ucp rootfs/myir-image-full-myd-jx8mp.tar.gz t:-
+FBK: ucmd sync
+
+FBK: ucmd umount /mnt/ext4
+FBK: ucmd umount /mnt/fat
+
+FBK: done

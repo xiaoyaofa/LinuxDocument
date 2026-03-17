@@ -1,0 +1,1 @@
+https://e2e.ti.com/support/processors-group/processors/f/processors-forum/1193620/faq-am62x-am64x-how-to-allow-linux-to-load-m4f-r5f-firmware-by-adding-a-resource-table

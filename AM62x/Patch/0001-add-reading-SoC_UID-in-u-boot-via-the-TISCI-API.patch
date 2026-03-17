@@ -1,0 +1,102 @@
+From ed3fc0fa8afa71bf5c552df2626015fa32e12125 Mon Sep 17 00:00:00 2001
+From: Hong Guan <hguan@ti.com>
+Date: Thu, 5 Sep 2024 11:28:12 -0500
+Subject: [PATCH 1/1] add reading SoC_UID in u-boot via the TISCI API
+
+Signed-off-by: Hong Guan <hguan@ti.com>
+---
+ drivers/firmware/ti_sci.c              | 38 ++++++++++++++++++++++++++
+ drivers/firmware/ti_sci.h              |  7 +++++
+ include/linux/soc/ti/ti_sci_protocol.h |  2 ++
+ 3 files changed, 47 insertions(+)
+
+diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
+index 2e9cc1d8..690f186d 100644
+--- a/drivers/firmware/ti_sci.c
++++ b/drivers/firmware/ti_sci.c
+@@ -329,6 +329,43 @@ static int ti_sci_cmd_get_revision(struct ti_sci_handle *handle)
+ 	return 0;
+ }
+ 
++
++static int ti_sci_cmd_get_soc_uid(const struct ti_sci_handle *handle, u32* soc_uid)
++{
++	struct ti_sci_msg_resp_soc_uid *resp;
++	struct ti_sci_msg_hdr req;
++	struct ti_sci_info *info;
++	struct ti_sci_xfer *xfer;
++	int ret;
++
++	if (IS_ERR(handle))
++		return PTR_ERR(handle);
++	if (!handle)
++		return -EINVAL;
++
++	info = handle_to_ti_sci_info(handle);
++
++	xfer = ti_sci_setup_one_xfer(info, TI_SCI_MSG_TYPE_GET_SOC_UID,
++				     TI_SCI_FLAG_REQ_ACK_ON_PROCESSED,
++				     (u32 *)&req, sizeof(req), sizeof(*resp));
++	if (IS_ERR(xfer)) {
++		ret = PTR_ERR(xfer);
++		dev_err(info->dev, "Message alloc failed(%d)\n", ret);
++		return ret;
++	}
++
++	ret = ti_sci_do_xfer(info, xfer);
++	if (ret) {
++		dev_err(info->dev, "Mbox communication fail %d\n", ret);
++		return ret;
++	}
++
++	resp = (struct ti_sci_msg_resp_soc_uid *)xfer->tx_message.buf;
++	memcpy(soc_uid, resp->soc_uid, sizeof(resp->soc_uid));
++
++	return 0;
++ }
++
+ /**
+  * cmd_set_board_config_using_msg() - Common command to send board configuration
+  *                                    message
+@@ -2665,6 +2702,7 @@ static void ti_sci_setup_ops(struct ti_sci_info *info)
+ 
+ 	core_ops->reboot_device = ti_sci_cmd_core_reboot;
+ 	core_ops->query_msmc = ti_sci_cmd_query_msmc;
++	core_ops->get_soc_uid = ti_sci_cmd_get_soc_uid;
+ 
+ 	rm_core_ops->get_range = ti_sci_cmd_get_resource_range;
+ 	rm_core_ops->get_range_from_shost =
+diff --git a/drivers/firmware/ti_sci.h b/drivers/firmware/ti_sci.h
+index bb8bc7be..c8cd2e9a 100644
+--- a/drivers/firmware/ti_sci.h
++++ b/drivers/firmware/ti_sci.h
+@@ -112,6 +112,13 @@ struct ti_sci_secure_msg_hdr {
+ 	u16 reserved;
+ } __packed;
+ 
++
++#define TI_SCI_MSG_TYPE_GET_SOC_UID		0x9021
++struct ti_sci_msg_resp_soc_uid {
++	struct ti_sci_msg_hdr hdr;
++	u32 soc_uid[8];
++} __packed;
++
+ /**
+  * struct ti_sci_msg_resp_version - Response for a message
+  * @hdr:		Generic header
+diff --git a/include/linux/soc/ti/ti_sci_protocol.h b/include/linux/soc/ti/ti_sci_protocol.h
+index 8e4c43ce..8895102a 100644
+--- a/include/linux/soc/ti/ti_sci_protocol.h
++++ b/include/linux/soc/ti/ti_sci_protocol.h
+@@ -259,6 +259,8 @@ struct ti_sci_core_ops {
+ 	int (*reboot_device)(const struct ti_sci_handle *handle);
+ 	int (*query_msmc)(const struct ti_sci_handle *handle,
+ 			  u64 *msmc_start, u64 *msmc_end);
++	int (*get_soc_uid)(const struct ti_sci_handle *handle,
++			  u32* soc_uid_ptr);
+ };
+ 
+ /**
+-- 
+2.34.1
+

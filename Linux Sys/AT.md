@@ -1,0 +1,1 @@
+chat -t 1 -e '' 'AT' 'OK' '' > /dev/ttyUSB2 < /dev/ttyUSB2

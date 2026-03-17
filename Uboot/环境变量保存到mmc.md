@@ -1,0 +1,5 @@
+env/mmc.c
+环境变量在mmc的偏移
+ENV_MMC_OFFSET
+环境变量在mmc的备份
+ENV_MMC_OFFSET_REDUND

@@ -1,0 +1,3 @@
+关闭服务
+stm32mp-calibration.timer
+stm32mp-calibration

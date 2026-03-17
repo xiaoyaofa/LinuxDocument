@@ -1,0 +1,1 @@
+echo gadget > /sys/bus/platform/devices/ci_hdrc.1/role

@@ -1,0 +1,1 @@
+sources/meta-myir/meta-bsp/recipes-myir/fac-burn-emmc-full/fac-burn-emmc-full/home/root/burn_emmc_dual.sh

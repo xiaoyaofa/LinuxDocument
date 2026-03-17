@@ -1,0 +1,1 @@
+修改/etc/qt5/eglfs_kms_cfg.json

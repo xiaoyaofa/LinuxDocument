@@ -1,0 +1,2 @@
+fw_printenv bootdelay
+fw_setenv bootdelay 1

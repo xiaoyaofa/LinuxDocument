@@ -1,0 +1,5 @@
+```
+apt install \
+    xterm \
+    lsb
+```

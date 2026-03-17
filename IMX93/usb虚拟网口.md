@@ -1,0 +1,2 @@
+modprobe g_ether
+win11检测不到虚拟网口，需要安装mod-rndis-driver-windows驱动
