@@ -31,6 +31,7 @@ git config --global --unset url."https://bgithub.xyz".insteadOf
 GIT_SSH_COMMAND="ssh -o ProxyCommand='nc -X 5 -x 127.0.0.1:7897 %h %p'" \
 git clone git@github.com:xxxxx
 ```
+
 ## 初始化
 git init
 
@@ -45,6 +46,7 @@ git push origin main
 
 验证
 ssh -T git@github.com
+
 ## 标签
 查看标签
 git tag
@@ -106,6 +108,20 @@ git config core.sparsecheckout true
 echo "KSZ/linux-drivers/ksz8895/linux-6.1" >> .git/info/sparse-checkout
 ## 浅克隆
 git pull --depth 1 origin master 
+```
+
+## 删除
+删除一个文件
+```
+git rm test.txt
+```
+如果文件已经被修改，可以强制删除
+```
+git rm -f test.txt
+```
+从 Git 跟踪中移除文件，但保留在工作目录
+```
+git rm --cached test.txt -r
 ```
 
 ## 杂项
