@@ -88,7 +88,8 @@ DISTRO_VERSION和DISTRO_CODENAME
 ## 只执行下载
 bitbake <包名> --runall=fetch
 
-## 修改kernel用自己github仓库
+## kernel相关修改
+### 修改kernel用自己github仓库
 在对应的meta文件夹中找到linux-xxx-xxx.bb
 修改
 ```
@@ -106,41 +107,52 @@ SRC_URI = "git://目录;protocol=file;"
 通过使用 gitsm://，Yocto 会自动处理子模块的克隆，无需额外手动操作。这对于项目中大量依赖子模块的情况尤为重要
 `用git://替换gitsm://前缀`
 
+### 添加fitImage
+poky/meta/classes/uboot-sign.bbclass下面指定rsa密钥
+```
+UBOOT_SIGN_KEYDIR = "xxx/keys"
+# keys name in keydir (eg. "dev.crt", "dev.key")
+UBOOT_SIGN_KEYNAME = "dev"
+UBOOT_SIGN_ENABLE = "1"
+UBOOT_MKIMAGE_DTCOPTS = "-I dts -O dtb -p 2000"
+```
+
+在linux.bb里面添加如下
+UBOOT_LOADADDRESS和UBOOT_ENTRYPOINT改成uboot中加载Image的内存地址
+```
+inherit kernel-fitimage
+KERNEL_CLASSES = " kernel-fitimage "
+KERNEL_IMAGETYPE = "fitImage"
+UBOOT_LOADADDRESS = "0x48080000"
+UBOOT_ENTRYPOINT  = "0x48080000"
+```
+一些调试相关内容
+反编译uboot.dtb，查看末尾是否有signature节点
+```
+dtc -I dtb -O dts -o test.dts u-boot.dtb
+cat test.dts
+```
+提取uboot.bin
+查看
+```
+$ binwalk u-boot.bin
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+3136          0xC40           CRC32 polynomial table, little endian
+676456        0xA5268         device tree image (dtb)
+```
+自动提取
+```
+binwalk -e u-boot.bin
+```
+
+
 ## 指定任务数量
 vim conf/local.conf
 ```
 BB_NUMBER_THREADS = "4"     #多少任务
 PARALLEL_MAKE = "-j 8"      #任务中执行线程数
 ```
-
-## bb文件调试
-python形式，以python开头的可以使用如下调试
-bb.plain, bb.note, bb.warn, bb.error, bb.fatal, bb.debug
-```
-python do_xxx() {
-    ···
-    bb.debug(2, "Got to point xyz")
-
-    ···
-}
-```
-bash形式
-bbplain, bbnote, bbwarn, bberror, bbfatal, bbdebug
-```
-do_xxx() {
-    ···
-    bbplain "-----------debug-------------"
-
-    ···
-}
-```
-## 调试
-bitbake xxx -c devshell
-进入一个 shell，里面包含了构建时所需的所有环境变量和工具，可以在此环境中手动运行命令
-
-生成pn-buildlist（任务要执行的软件包列表）
-bitbake xxx -g
-
 ## 添加模块
 4种方法
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS
@@ -191,6 +203,10 @@ PACKAGECONFIG_xxx:remove = " xxx"
 镜像中排查包
 ```
 IMAGE_INSTALL_remove += " xxx"
+```
+将当前安装目录中的/xxx，共享到recipe-sysroot
+```
+SYSROOT_DIRS:append = " /xxx"
 ```
 
 ## 禁用网络

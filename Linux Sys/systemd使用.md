@@ -93,8 +93,10 @@ systemctl list-dependencies --reverse emptty.service
 /lib/systemd/system-generators/systemd-sysv-generator
 用于自动转换老的sysv(/etc/init.d)到/run/systemd/generator.late
 
+```
 systemd-sysv-install
 Usage: /lib/systemd/systemd-sysv-install [--root=path] enable|disable|is-enabled <sysv script name>
+```
 
 举例要修改systemd-sysv自动生成的dropbear服务配置
 通过override覆盖原来的配置
@@ -107,7 +109,9 @@ RemainAfterExit=no
 ```
 这个设置会覆盖原本的服务配置
 systemctl daemon-reload
+
 ## 查看日志
+
 journalctl -u test.service -f
 journalctl -f
 
@@ -140,6 +144,7 @@ systemctl restart systemd-journald
 
 
 ## 分页打印
+
 临时
 添加 --no-pager 参数
 永久
@@ -165,3 +170,16 @@ NTP=ntp1.aliyun.com ntp.neu.edu.cn
 ```
 
 systemctl restart systemd-timesyncd.service
+
+## watchdog
+配置/etc/systemd/system.conf
+
+```
+[Manager]
+RuntimeWatchdogSec=30s
+RebootWatchdogSec=10min
+KExecWatchdogSec=5min
+```
+- **RuntimeWatchdogSec**: 配置运行时的硬件看门狗超时时间。如果在指定时间内没有收到心跳信号，系统将自动重启。
+- **RebootWatchdogSec**: 配置系统重启时的看门狗超时时间。用于确保在重启过程中，如果系统无法正常重启，看门狗会强制重启系统。
+- **KExecWatchdogSec**: 配置 kexec 执行时的看门狗超时时间。kexec 是一种快速重启技术，允许直接从当前内核启动新内核。

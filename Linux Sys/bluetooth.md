@@ -68,6 +68,21 @@ system-alias <name>
 ```
 set-alias <name>
 ```
+
+### BLE
+只扫描ble设备
+```
+scan le on
+```
+测试ble时，手机使用nRF Connect软件和linux开发板的蓝牙连接
+在bluetoothctl连接后
+切换到gatt
+```
+menu gatt
+```
+
+
+
 ## btmgmt
 
 ## 调试发送接收的命令
