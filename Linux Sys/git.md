@@ -33,19 +33,35 @@ git clone git@github.com:xxxxx
 ```
 
 ## 初始化
+```
 git init
+```
 
+暂存添加所有文件
+```
 git add .
+```
+只暂存已跟踪的文件
+```
+git add -u .
+```
 
+```
 git commit -m "信息"
+```
 
 关联仓库
+```
 git remote add origin git@github.com:helloWorldchn/test.git
-
+```
+推送
+```
 git push origin main
-
+```
 验证
+```
 ssh -T git@github.com
+```
 
 ## 标签
 查看标签
@@ -123,6 +139,32 @@ git rm -f test.txt
 ```
 git rm --cached test.txt -r
 ```
+
+## git stash
+
+保存所有未暂存文件的修改
+```
+git stash push --keep-index -m "tmp"
+```
+
+保存所有文件已跟踪的修改
+```
+git stash push -m "tmp"
+```
+
+查看stash列表
+```
+git stash list
+```
+恢复最近一次保存并删除该记录
+```
+git stash pop
+```
+恢复指定 stash，但保留记录
+```
+git stash apply stash@{1}
+```
+
 
 ## 杂项
 撤销修改，并保留工作区修改

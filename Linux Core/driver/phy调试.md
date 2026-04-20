@@ -41,30 +41,3 @@ tcpdump -i eth0 host 10.3.3.2 &
 ping 10.3.3.2 -c 1
 ```
 回环通的话能抓到2个包
-
-
-ethtool -s eth1 speed 1000 duplex full autoneg off
-使用phytool工具写phy的寄存器，开启回环模式
-1000M回环一般都是0x0寄存器写0x4140
-```
-./phytool write eth1/0x0/0x0 0x4140
-./phytool read eth1/0x0/0x0
-```
-设置本机静态ip
-ifconfig eth1 10.3.3.1
-用本机mac地址虚拟远端IP（同网段）建立MAC映射
-```
-arp -s 10.3.3.2 3A:69:D0:D9:80:0A
-```
-或者
-```
-ip neigh add 10.3.3.2 lladdr 3A:69:D0:D9:80:0A dev eth1 nud permanent
-```
-抓包
-```
-tcpdump -i eth1 host 10.3.3.2 &
-```
-```
-ping 10.3.3.2 -c 1
-```
-回环通的话能抓到2个包

@@ -36,3 +36,15 @@ do_prepare_patches() {
 }
 ```
 
+## 添加本地文件
+```
+SRC_URI += "\
+	xxx.txt \
+"
+```
+注意，如果添加的文件是压缩格式，但是你又不想要yocto自动解压，需要添加如下
+```
+SRC_URI += "\
+	xxx.gz;unpack=false \
+"
+```

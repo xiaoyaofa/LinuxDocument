@@ -183,3 +183,7 @@ KExecWatchdogSec=5min
 - **RuntimeWatchdogSec**: 配置运行时的硬件看门狗超时时间。如果在指定时间内没有收到心跳信号，系统将自动重启。
 - **RebootWatchdogSec**: 配置系统重启时的看门狗超时时间。用于确保在重启过程中，如果系统无法正常重启，看门狗会强制重启系统。
 - **KExecWatchdogSec**: 配置 kexec 执行时的看门狗超时时间。kexec 是一种快速重启技术，允许直接从当前内核启动新内核。
+重启服务
+```
+
+```
