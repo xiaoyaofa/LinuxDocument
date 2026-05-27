@@ -24,13 +24,10 @@ PACKAGECONFIG_append_pn-qtbase = " sql-sqlite"
 ### 更换qt镜像源
 yocto指定把git://code.qt.io换成github
 预镜像配置 (PREMIRRORS)
+conf/local.conf
 ```
-PREMIRRORS:prepend = " \
-    git://code.qt.io/qt/*    git://github.com/qt/* \
-    git://code.qt.io/qt/qtwebengine-chromium.git  git://github.com/qt/qtwebengine-chromium.git \
-    git://code.qt.io/qt/qtquick3d-assimp.git  git://github.com/qt/qtquick3d-assimp.git \
-    git://code.qt.io/qt/qtquick3d.git  git://github.com/qt/qtquick3d.git \
-"
+QT_GIT = "git://github.com/${QT_GIT_PROJECT}"
+QT_GIT_PROTOCOL = "https"
 ```
 
 ## 生成sdk没有qmake

@@ -15,6 +15,24 @@ docker run --name ubuntu22.04 -itd ubuntu:22.04 /bin/bash
 ```
 docker start -itd --name=ubuntu22.04 -v /opt/docker-share:/docker-share ubuntu22.04
 ```
+
+### 卷
+创建卷
+```
+docker volume create my_data_volume
+```
+运行容器并挂载到卷
+```
+docker run -d \
+  --name my_container \
+  -v my_data_volume:/container/data/path \
+  ubuntu:22.04
+```
+查看卷信息
+```
+docker volume inspect my_data_volume
+```
+
 ### 查询
 查看镜像
 ```

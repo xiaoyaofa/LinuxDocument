@@ -52,3 +52,33 @@ gst-launch-1.0 filesrc location=farEnd.wav ! \
 ```
 gst-device-monitor-1.0 Audio/Source
 ```
+
+## 播放摄像头
+### USB摄像头
+wayland
+```
+gst-launch-1.0 v4l2src device=/dev/video0 ! image/jpeg,width=1280,height=720,framerate=30/1   ! jpegdec ! videoconvert ! waylandsink
+```
+FB
+```
+gst-launch-1.0 v4l2src device=/dev/video0 ! image/jpeg,width=1280,height=720,framerate=30/1   ! jpegdec ! videoconvert ! fbdevsink device=/dev/fb0
+```
+保存成jpeg流格式
+```
+gst-launch-1.0 v4l2src device=/dev/video0 \
+  ! image/jpeg,width=1280,height=720,framerate=30/1 \
+  ! filesink location=/root/720p-30fps.mjpeg
+```
+播放jpeg流格式
+```
+gst-launch-1.0 filesrc location=/root/720p-30fps.mjpeg \
+  ! jpegdec ! videoconvert \
+  ! videorate ! video/x-raw,framerate=30/1 \
+  ! waylandsink
+```
+调试参数
+增加帧数显示
+```
+gst-launch-1.0 v4l2src device=/dev/video0 ! image/jpeg,width=1280,height=720,framerate=30/1 ! jpegdec ! videoconvert ! fpsdisplaysink video-sink=waylandsink text-overlay=true sync=true
+```
+

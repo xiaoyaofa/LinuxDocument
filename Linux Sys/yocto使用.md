@@ -81,6 +81,14 @@ bitbake <包名> -c cleanall
 ### build/tmp
 构建时生成的缓存文件
 
+### yocto空间管理
+为了在构建过程中节省磁盘空间，你可以添加以下内容在local.conf
+配置后，yocto会在构建完成后，自动删除tmp/work下面的中间构建文件以节省空间
+```
+INHERIT += "rm_work"
+```
+
+
 ## 查看yocto版本
 poky/meta-poky/conf/distro/poky.conf
 DISTRO_VERSION和DISTRO_CODENAME

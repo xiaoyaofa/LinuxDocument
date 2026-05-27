@@ -4,5 +4,8 @@
 			"path": ".."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"chat.agent.enabled": true,
+		"chat.customAgentInSubagent.enabled": true
+	}
 }

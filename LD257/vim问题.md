@@ -1,4 +1,6 @@
 去掉vim鼠标功能
-vi ~/.vimrc
-set mouse=v
+```
+echo 'set mouse=v
 set paste!
+' > ~/.vimrc
+```

@@ -8,6 +8,10 @@ git format-patch xxxxxxxxxxxxx(commit id) -n
 ```
 git diff <old commit> <new commit> > xxx.patch
 ```
+指定文件
+```
+git diff <old commit> <new commit> -- <file> > xxx.patch
+```
 基于上一次内容打包
 HEAD^^就是上两次
 ```
