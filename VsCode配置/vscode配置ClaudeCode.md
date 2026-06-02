@@ -26,3 +26,15 @@ vi ~/.claude/CLAUDE.md
 - 回复使用中文
 
 ```
+
+## 设置权限
+vscode设置->拓展->Claude Code
+
+勾选如下功能，允许开启旁路权限模式，开启后相当于给agent最高权限
+```
+Allow Dangerously Skip Permissions
+```
+初始化的权限模式，建议改到plan
+```
+Initial Permission Mode
+```
