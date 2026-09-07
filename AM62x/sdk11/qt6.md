@@ -9,12 +9,12 @@ vi /etc/eglfs_kms.json
   "outputs": [
     {
       "name": "HDMI1",
-      "mode": "1280x720",
+      "mode": "1024x600",
       "clones": "LVDS1"
     },
     {
       "name": "LVDS1",
-      "mode": "1280x720"
+      "mode": "1024x600"
     }
   ]
 }

@@ -368,5 +368,11 @@ already-stripped：文件重复剥离
 arch：架构不匹配
 ```
 
+# deb包
+依赖查找
+```
+oe-pkgdata-util depends -r chromium-ozone-wayland
+```
+
 # 官方文档
 https://docs.yoctoproject.org/

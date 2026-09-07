@@ -3,7 +3,7 @@ Vscode搜索claude code后安装
 
 ## 接入deepseek
 原生要登录账号，可以通过修改跳过
-修改~/.claude.json
+修改~/.claude.json或者~/.claude/settings.json
 其中ANTHROPIC_AUTH_TOKEN填自己Deepseek API
 ```
 "hasCompletedOnboarding": true,
@@ -38,3 +38,11 @@ Allow Dangerously Skip Permissions
 ```
 Initial Permission Mode
 ```
+
+## 本地vscode插件路径
+下面的*代表版本号
+```
+~/.vscode-server/extensions/anthropic.claude-code-*linux-x64/resources/native-binary/claude
+```
+
+## 导出skill

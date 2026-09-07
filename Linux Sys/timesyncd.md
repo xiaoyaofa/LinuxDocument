@@ -3,7 +3,8 @@ vi /etc/systemd/timesyncd.conf
 ```
 ···
 [Time]
-FallbackNTP=ntp.ntsc.ac.cn cn.ntp.org.cn
+NTP=ntp.ntsc.ac.cn ntp.aliyun.com ntp.tencent.com
+FallbackNTP=cn.pool.ntp.org cn.ntp.org.cn
 ···
 ```
 systemctl restart systemd-timesyncd

@@ -62,6 +62,8 @@ systemctl daemon-reload
 systemctl list-units --type=service --state=active
 查看运行中的服务
 systemctl list-units --type=service --state=running
+查看运行中的设备
+systemctl list-units --type=device
 ## 自启分析
 查看所有开机自启的服务
 ```
@@ -160,14 +162,6 @@ systemctl stop avahi-daemon ntpd rpcbind rpcbind.socket  nfs-server.service nfs-
 
 ## 加载模块
 systemctl status systemd-modules-load
-
-## 网络时间同步
-配置文件
-/etc/systemd/timesyncd.conf
-添加NTP网站
-```
-NTP=ntp1.aliyun.com ntp.neu.edu.cn
-```
 
 systemctl restart systemd-timesyncd.service
 
