@@ -82,3 +82,7 @@ gst-launch-1.0 filesrc location=/root/720p-30fps.mjpeg \
 gst-launch-1.0 v4l2src device=/dev/video0 ! image/jpeg,width=1280,height=720,framerate=30/1 ! jpegdec ! videoconvert ! fpsdisplaysink video-sink=waylandsink text-overlay=true sync=true
 ```
 
+## 预览jpeg
+```
+gst-launch-1.0 filesrc location=/tmp/photo.jpg ! jpegdec ! imagefreeze ! videoconvert ! waylandsink
+```

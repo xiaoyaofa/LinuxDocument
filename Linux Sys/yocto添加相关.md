@@ -29,6 +29,11 @@ conf/local.conf
 QT_GIT = "git://github.com/${QT_GIT_PROJECT}"
 QT_GIT_PROTOCOL = "https"
 ```
+有些yocto版本是
+```
+QT_GIT = "git://github.com"
+QT_GIT_PROTOCOL = "https"
+```
 
 ## 生成sdk没有qmake
 IMAGE_INSTALL_append = " qtbase-dev qtbase-mkspecs qtbase-tools "
