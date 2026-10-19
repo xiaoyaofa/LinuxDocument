@@ -10,9 +10,9 @@ Vscode搜索claude code后安装
 "env": {
     "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
     "ANTHROPIC_AUTH_TOKEN": "xxxxxxxxxxxxxxxxxxxxxx",
-    "ANTHROPIC_MODEL": "deepseek-v4-pro[1m]",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro[1m]",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-pro[1m]",
+    "ANTHROPIC_MODEL": "deepseek-v4-flash[1m]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-flash[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-flash[1m]",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash[1m]",
     "CLAUDE_CODE_EFFORT_LEVEL": "max"
   },
@@ -43,6 +43,13 @@ Initial Permission Mode
 下面的*代表版本号
 ```
 ~/.vscode-server/extensions/anthropic.claude-code-*linux-x64/resources/native-binary/claude
+```
+添加插件
+```
+CLAUDE=/home/myir/.vscode-server/extensions/anthropic.claude-code-2.1.296-linux-x64/resources/native-binary/claude
+
+$CLAUDE plugin marketplace add cathrynlavery/diagram-design   # 把仓库 clone 到本地缓存
+$CLAUDE plugin install diagram-design@diagram-design          # 从缓存里装这个插件
 ```
 
 ## 导出skill
